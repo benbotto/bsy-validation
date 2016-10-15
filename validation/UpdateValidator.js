@@ -14,14 +14,21 @@ require('insulin').factory('UpdateValidator', function(ModelValidator) {
      */
     constructor(model, tableAlias, database) {
       super(model, tableAlias, database);
+    }
 
-      const pkAlias = database
-        .getTableByAlias(tableAlias)
-        .getPrimaryKey()[0]
-        .getAlias();
+    /**
+     * Override the validation initialization and ensure that the primary key
+     * is defined.
+     * @param col The database Column instance for which validation constraints
+     *        should be initialized.
+     */
+    setColumnValidation(col) {
+      // This calls this.key(col.getAlias()) so the key is set.
+      super.setColumnValidation(col);
 
-      // Primary key must be present on an update.
-      this.key(pkAlias).defined();
+      // Primary key must be present.
+      if (col.isPrimary())
+        this.defined();
     }
   }
 
