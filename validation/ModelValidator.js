@@ -17,34 +17,47 @@ require('insulin').factory('ModelValidator', function(ObjectValidator) {
     constructor(model, tableAlias, database) {
       super(model);
 
-      database.getTableByAlias(tableAlias).getColumns().forEach(col => {
-        // Validating the current column, by alias.
-        this.key(col.getAlias());
+      this.database   = database;
+      this.tableAlias = tableAlias;
 
-        if (!col.isNullable())
-          this.notNull();
+      database
+        .getTableByAlias(tableAlias)
+        .getColumns()
+        .forEach(col => this.setColumnValidation(col));
+    }
 
-        switch (col.getDataType()) {
-          case 'int':
-            this.integer();
-            break;
-          case 'varchar':
-          case 'nvarchar':
-          case 'text':
-            // Note: Even though searching on blank strings is a valid
-            // operation, in this application blank strings are disallowed.
-            this.string().notBlank();
-            if (col.getMaxLength())
-              this.maxLength(col.getMaxLength());
-            break;
-          case 'timestamp':
-          case 'datetime':
-            this.iso8601();
-            break;
-          default:
-            break;
-        }
-      });
+    /**
+     * Initialize the validation for column.
+     * @param col The database Column instance for which validation constraints
+     *        should be initialized.
+     */
+    setColumnValidation(col) {
+      // Validating the current column, by alias.
+      this.key(col.getAlias());
+
+      if (!col.isNullable())
+        this.notNull();
+
+      switch (col.getDataType()) {
+        case 'int':
+          this.integer();
+          break;
+        case 'varchar':
+        case 'nvarchar':
+        case 'text':
+          // Note: Even though searching on blank strings is a valid
+          // operation, in this application blank strings are disallowed.
+          this.string().notBlank();
+          if (col.getMaxLength())
+            this.maxLength(col.getMaxLength());
+          break;
+        case 'timestamp':
+        case 'datetime':
+          this.iso8601();
+          break;
+        default:
+          break;
+      }
     }
   }
 
