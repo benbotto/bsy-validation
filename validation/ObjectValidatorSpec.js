@@ -3,10 +3,10 @@
 describe('ObjectValidator suite', function() {
   require('../bootstrap');
 
-  let ObjectValidator = require('insulin').get('ObjectValidator');
+  const ObjectValidator = require('insulin').get('ObjectValidator');
 
   it('checks for defined keys.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'asdf',
       empt: '',
       n: null,
@@ -21,14 +21,14 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(1);
     expect(errors[0].message).toBe('nope is required.');
     expect(errors[0].field).toBe('nope');
   });
 
   it('checks that fields are nullable by default.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: null,
       age: null
     });
@@ -41,7 +41,7 @@ describe('ObjectValidator suite', function() {
   });
 
   it('checks that non-nullable fields cannot be null.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: null,
       age: null
     });
@@ -52,19 +52,19 @@ describe('ObjectValidator suite', function() {
 
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(2);
     expect(errors[0].message).toBe('name cannot be null.');
     expect(errors[1].message).toBe('age cannot be null.');
   });
 
   it('checks the getErrorList method.', function() {
-    let ov = new ObjectValidator({num: 'asdf'});
+    const ov = new ObjectValidator({num: 'asdf'});
     ov.key('n').defined()
       .key('num').integer()
       .validate();
 
-    let errList = ov.getErrorList();
+    const errList = ov.getErrorList();
 
     expect(errList.errors.length).toBe(2);
     expect(errList.message).toBe('Validation errors occurred.');
@@ -96,7 +96,7 @@ describe('ObjectValidator suite', function() {
   });
 
   it('checks that a variable is a string.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'asdf',
       empt: '',
       num: 4,
@@ -111,14 +111,14 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(1);
     expect(errors[0].message).toBe('num is not a string.');
     expect(errors[0].field).toBe('num');
   });
 
   it('checks that a valiable is not a blank string.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'asdf',
       profession: '',
       notes: null,
@@ -131,14 +131,14 @@ describe('ObjectValidator suite', function() {
       .key('other').notBlank()
       .validate();
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(1);
     expect(errors[0].message).toBe('profession cannot be blank.');
     expect(errors[0].field).toBe('profession');
   });
 
   it('checks that a variable is an email.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'asdf',
       email: 'asdf@asdf.com',
       empt: '',
@@ -155,7 +155,7 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(4);
     expect(errors[0].message).toBe('other is not a valid email address.');
     expect(errors[0].field).toBe('other');
@@ -168,7 +168,7 @@ describe('ObjectValidator suite', function() {
   });
 
   it('checks that a variable is a phone number.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'asdf',
       phone: '916-221-3110',
       phone2: '(916) 221-3110',
@@ -192,7 +192,7 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(5);
     expect(errors[0].message).toBe('name is not a valid phone number.');
     expect(errors[0].field).toBe('name');
@@ -207,7 +207,7 @@ describe('ObjectValidator suite', function() {
   });
 
   it('checks that a minimum length is met.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: '12345',
       num: 12345,
       other: ''
@@ -219,7 +219,7 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(2);
     expect(errors[0].message).toBe('name must be at least 6 characters long.');
     expect(errors[0].field).toBe('name');
@@ -228,7 +228,7 @@ describe('ObjectValidator suite', function() {
   });
 
   it('checks that a maximum length is met.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: '12345',
       num: 12345
     });
@@ -238,14 +238,14 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(1);
     expect(errors[0].message).toBe('name must be at most 4 characters long.');
     expect(errors[0].field).toBe('name');
   });
 
   it('checks the integer validator.', function() {
-    let ov = new ObjectValidator({
+    const ov = new ObjectValidator({
       name: 'Joe',
       age: 12345
     });
@@ -255,7 +255,7 @@ describe('ObjectValidator suite', function() {
       .validate();
     expect(ov.isValid()).toBe(false);
 
-    let errors = ov.getErrors();
+    const errors = ov.getErrors();
     expect(errors.length).toBe(1);
     expect(errors[0].message).toBe('name is not a valid integer.');
     expect(errors[0].field).toBe('name');

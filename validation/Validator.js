@@ -58,7 +58,7 @@ require('insulin').factory('Validator', function(moment) {
      * Make sure a number is an int.
      */
     isInteger(val) {
-      let type = typeof val;
+      const type = typeof val;
       return (type === 'number' || type === 'string') && Number(val) % 1 === 0;
     }
 

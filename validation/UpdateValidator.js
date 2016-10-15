@@ -15,7 +15,7 @@ require('insulin').factory('UpdateValidator', function(ModelValidator) {
     constructor(model, tableAlias, database) {
       super(model, tableAlias, database);
 
-      let pkAlias = database
+      const pkAlias = database
         .getTableByAlias(tableAlias)
         .getPrimaryKey()[0]
         .getAlias();

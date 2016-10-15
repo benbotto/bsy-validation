@@ -15,8 +15,8 @@ require('insulin').factory('InsertValidator', function(ModelValidator) {
     constructor(model, tableAlias, database) {
       super(model, tableAlias, database);
 
-      let table   = database.getTableByAlias(tableAlias);
-      let pkAlias = table.getPrimaryKey()[0].getAlias();
+      const table   = database.getTableByAlias(tableAlias);
+      const pkAlias = table.getPrimaryKey()[0].getAlias();
 
       // Primary key is not allowed on insert.
       this.key(pkAlias).notDefined();

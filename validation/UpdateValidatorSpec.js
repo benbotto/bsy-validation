@@ -3,10 +3,10 @@
 describe('UpdateValidator suite', function() {
   require('../bootstrap');
 
-  let insulin         = require('insulin');
-  let UpdateValidator = insulin.get('UpdateValidator');
-  let Database        = insulin.get('ndm').Database;
-  let dbSchema        = {
+  const insulin         = require('insulin');
+  const UpdateValidator = insulin.get('UpdateValidator');
+  const Database        = insulin.get('ndm').Database;
+  const dbSchema        = {
     name: 'disc_golf_tracker',
     tables: [{
       name: 'widgets',
@@ -17,12 +17,13 @@ describe('UpdateValidator suite', function() {
       }]
     }]
   };
-  let db = new Database(dbSchema);
+  const db = new Database(dbSchema);
 
   // Checks that the primary key is required on update.
   it('checks that the primary key is required on update.', function() {
     let model = {widgetID: 42};
     let mv    = new UpdateValidator(model, 'widgets', db);
+
     mv.validate();
     expect(mv.isValid()).toBe(true);
 

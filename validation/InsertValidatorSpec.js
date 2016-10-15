@@ -3,10 +3,10 @@
 describe('InsertValidator suite', function() {
   require('../bootstrap');
 
-  let insulin         = require('insulin');
-  let InsertValidator = insulin.get('InsertValidator');
-  let Database        = insulin.get('ndm').Database;
-  let dbSchema        = {
+  const insulin         = require('insulin');
+  const InsertValidator = insulin.get('InsertValidator');
+  const Database        = insulin.get('ndm').Database;
+  const dbSchema        = {
     name: 'disc_golf_tracker',
     tables: [{
       name: 'widgets',
@@ -24,7 +24,7 @@ describe('InsertValidator suite', function() {
       ]
     }]
   };
-  let db = new Database(dbSchema);
+  const db = new Database(dbSchema);
 
   it('checks that the primary key is not allowed on insert.', function() {
     let model = {widgetID: 42, name: 'joe'};

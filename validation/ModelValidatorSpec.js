@@ -3,10 +3,10 @@
 describe('ModelValidator suite', function() {
   require('../bootstrap');
 
-  let insulin        = require('insulin');
-  let ModelValidator = insulin.get('ModelValidator');
-  let Database       = insulin.get('ndm').Database;
-  let dbSchema = {
+  const insulin        = require('insulin');
+  const ModelValidator = insulin.get('ModelValidator');
+  const Database       = insulin.get('ndm').Database;
+  const dbSchema = {
     name: 'disc_golf_tracker',
     tables: [
       {
@@ -45,11 +45,11 @@ describe('ModelValidator suite', function() {
       }
     ]
   };
-  let db = new Database(dbSchema);
+  const db = new Database(dbSchema);
 
   it('checks that non-null fields cannot be null.', function() {
-    let model = {name: null};
-    let mv    = new ModelValidator(model, 'people', db);
+    const model = {name: null};
+    const mv    = new ModelValidator(model, 'people', db);
     mv.validate();
     expect(mv.isValid()).toBe(false);
     expect(mv.getErrors()[0].message).toBe('name cannot be null.');

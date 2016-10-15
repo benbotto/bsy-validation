@@ -3,8 +3,8 @@
 describe('Validator suite', function() {
   require('../bootstrap');
 
-  let Validator = require('insulin').get('Validator');
-  let v = new Validator();
+  const Validator = require('insulin').get('Validator');
+  const v = new Validator();
 
   it('checks that a variable is a string.', function() {
     expect(v.isString('asdf')).toBe(true);

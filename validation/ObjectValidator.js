@@ -48,7 +48,7 @@ require('insulin')
         this._errors.length = 0;
 
         for (let fieldName in this._fields) {
-          let field = this._fields[fieldName];
+          const field = this._fields[fieldName];
 
           // Validate the field if it is defined.
           if (this._validator.keyExists(this._obj, fieldName)) {
