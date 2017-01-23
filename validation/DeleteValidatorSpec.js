@@ -49,7 +49,6 @@ describe('DeleteValidator suite', function() {
   });
 
   it('checks that other model properties are ignored.', function() {
-    console.log('---------------------------------------');
     let model = {widgetID: 42, widgetType: 'asdf'};
     let mv    = new DeleteValidator(model, 'widgets', db);
 

@@ -9,36 +9,37 @@ require('insulin').factory('ModelValidator', function(ObjectValidator) {
   class ModelValidator extends ObjectValidator {
     /**
      * Initialize the validator.  The validator will validate a model
-     * of type tableAlias (a table alias) against database.
-     * @param model The object to validate.
-     * @param tableAlias The alias of the table to which model belongs.
-     * @param database An ndm.Database instance.
+     * of type tableMapping (a table mapping) against database.
+     * @param {Object} model - The object to validate.
+     * @param {string} tableMapping - The mapping of the table to which model
+     * belongs.
+     * @param {Database} database - An ndm.Database instance.
      */
-    constructor(model, tableAlias, database) {
+    constructor(model, tableMapping, database) {
       super(model);
 
-      this.database   = database;
-      this.tableAlias = tableAlias;
+      this.database     = database;
+      this.tableMapping = tableMapping;
 
       database
-        .getTableByAlias(tableAlias)
-        .getColumns()
+        .getTableByMapping(tableMapping)
+        .columns
         .forEach(col => this.setColumnValidation(col));
     }
 
     /**
      * Initialize the validation for column.
-     * @param col The database Column instance for which validation constraints
-     *        should be initialized.
+     * @param {Column} col The database Column instance for which validation
+     * constraints should be initialized.
      */
     setColumnValidation(col) {
-      // Validating the current column, by alias.
-      this.key(col.getAlias());
+      // Validating the current column, by mapping.
+      this.key(col.mapTo);
 
-      if (!col.isNullable())
+      if (!col.isNullable)
         this.notNull();
 
-      switch (col.getDataType()) {
+      switch (col.dataType) {
         case 'int':
           this.integer();
           break;
@@ -48,8 +49,8 @@ require('insulin').factory('ModelValidator', function(ObjectValidator) {
           // Note: Even though searching on blank strings is a valid
           // operation, in this application blank strings are disallowed.
           this.string().notBlank();
-          if (col.getMaxLength())
-            this.maxLength(col.getMaxLength());
+          if (col.maxLength)
+            this.maxLength(col.maxLength);
           break;
         case 'timestamp':
         case 'datetime':
