@@ -63,6 +63,20 @@ require('insulin').factory('Validator', function(moment) {
     }
 
     /**
+     * Make sure a number is a float.
+     */
+    isFloat(val) {
+      return !isNaN(Number(val)) && Number(val) % 1 !== 0;
+    }
+
+    /**
+     * Make sure value is a number
+     */
+    isNumber(val) {
+      return !isNaN(Number(val));
+    }
+
+    /**
      * Make sure a value is at least a certain length.
      */
     minLength(val, length) {
@@ -111,6 +125,20 @@ require('insulin').factory('Validator', function(moment) {
      */
     notNull(val) {
       return val !== null;
+    }
+
+    /**
+     * Make sure value is boolean
+     */
+    isBoolean(val) {
+      return typeof val === 'boolean';
+    }
+
+    /**
+     * Make sure value is bit
+     */
+    isBit(val) {
+      return val === 0 || val === 1;
     }
   }
 

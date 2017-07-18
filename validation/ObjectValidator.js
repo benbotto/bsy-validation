@@ -241,6 +241,32 @@ require('insulin')
       }
 
       /**
+       * Validates current key as float
+       */
+      float() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isFloat,
+          message:   this._curKey + ' is not a valid float.',
+          code:      'VAL_FLOAT'
+        });
+        return this;
+      }
+
+      /**
+       * Validates current key as number
+       */
+      number() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isNumber,
+          message:   this._curKey + ' is not a valid number.',
+          code:      'VAL_NUMBER'
+        });
+        return this;
+      }
+
+      /**
        * Checks that the current key is a valid ISO8601 date.
        */
       iso8601() {
@@ -250,6 +276,32 @@ require('insulin')
           message:   this._curKey + ' must be a valid ISO8601 date in the format ' +
                      'YYYY-MM-DDTHH:mm:ss.sssZ.',
           code:      'VAL_ISO8601'
+        });
+        return this;
+      }
+
+      /**
+       * Validates the current key as a boolean
+       */
+      boolean() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isBoolean,
+          message:   this._curKey + ' must be true or false.',
+          code:      'VAL_BOOLEAN'
+        });
+        return this;
+      }
+
+      /**
+       * Validates the current key as a bit
+       */
+      bit() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isBit,
+          message:   this._curKey + ' must be 0 or 1.',
+          code:      'VAL_BIT'
         });
         return this;
       }
