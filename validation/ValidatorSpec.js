@@ -125,5 +125,37 @@ describe('Validator suite', function() {
     expect(v.notNull(undefined)).toBe(true);
     expect(v.notNull(null)).toBe(false);
   });
+
+  it('checks the float function.', function() {
+    expect(v.isFloat(1.2)).toBe(true);
+    expect(v.isFloat('1.2')).toBe(true);
+    expect(v.isFloat(1)).toBe(false); // Int.
+    expect(v.isFloat('asdf')).toBe(false);
+  });
+
+  it('checks the number function.', function() {
+    expect(v.isNumber(1.2)).toBe(true);
+    expect(v.isNumber('1.2')).toBe(true);
+    expect(v.isNumber(1)).toBe(true);
+    expect(v.isNumber('1')).toBe(true);
+    expect(v.isNumber('asdf')).toBe(false);
+  });
+
+  it('checks the bit function.', function() {
+    expect(v.isBit(1)).toBe(true);
+    expect(v.isBit(0)).toBe(true);
+    expect(v.isBit('1')).toBe(true);
+    expect(v.isBit('0')).toBe(true);
+    expect(v.isBit('asdf')).toBe(false);
+    expect(v.isBit(2)).toBe(false);
+  });
+
+  it('checks the boolean function.', function() {
+    expect(v.isBoolean(true)).toBe(true);
+    expect(v.isBoolean(false)).toBe(true);
+    expect(v.isBoolean(1)).toBe(false);
+    expect(v.isBoolean(0)).toBe(false);
+    expect(v.isBoolean('asdf')).toBe(false);
+  });
 });
 

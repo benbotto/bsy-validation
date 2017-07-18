@@ -261,6 +261,52 @@ describe('ObjectValidator suite', function() {
     expect(errors[0].field).toBe('name');
   });
 
+  it('checks the float validation.', function() {
+    let ov = new ObjectValidator({
+      hourlyRate: 'asdf'
+    });
+
+    ov.key('hourlyRate').defined().float()
+      .validate();
+    expect(ov.isValid()).toBe(false);
+
+    const errors = ov.getErrors();
+    expect(errors.length).toBe(1);
+    expect(errors[0].message).toBe('hourlyRate is not a valid float.');
+    expect(errors[0].field).toBe('hourlyRate');
+
+    ov = new ObjectValidator({
+      hourlyRate: 12.5
+    });
+
+    ov.key('hourlyRate').defined().float()
+      .validate();
+    expect(ov.isValid()).toBe(true);
+  });
+
+  it('checks the number validation.', function() {
+    let ov = new ObjectValidator({
+      hourlyRate: 'asdf'
+    });
+
+    ov.key('hourlyRate').defined().number()
+      .validate();
+    expect(ov.isValid()).toBe(false);
+
+    const errors = ov.getErrors();
+    expect(errors.length).toBe(1);
+    expect(errors[0].message).toBe('hourlyRate is not a valid number.');
+    expect(errors[0].field).toBe('hourlyRate');
+
+    ov = new ObjectValidator({
+      hourlyRate: 12
+    });
+
+    ov.key('hourlyRate').defined().number()
+      .validate();
+    expect(ov.isValid()).toBe(true);
+  });
+
   it('checks that a key is defined.', function() {
     let ov = new ObjectValidator({});
     ov.key('userID').defined().validate();
@@ -307,6 +353,28 @@ describe('ObjectValidator suite', function() {
     ov.key('userID').notNull().validate();
     expect(ov.isValid()).toBe(false);
     expect(ov.getErrors()[0].message).toBe('userID cannot be null.');
+  });
+
+  it('checks the boolean validation.', function() {
+    let ov = new ObjectValidator({needsHelp: true});
+    ov.key('needsHelp').defined().boolean().validate();
+    expect(ov.isValid()).toBe(true);
+
+    ov = new ObjectValidator({needsHelp: 'asdf'});
+    ov.key('needsHelp').defined().boolean().validate();
+    expect(ov.isValid()).toBe(false);
+    expect(ov.getErrors()[0].message).toBe('needsHelp must be true or false.');
+  });
+
+  it('checks the bit validation.', function() {
+    let ov = new ObjectValidator({needsHelp: 1});
+    ov.key('needsHelp').defined().bit().validate();
+    expect(ov.isValid()).toBe(true);
+
+    ov = new ObjectValidator({needsHelp: 'asdf'});
+    ov.key('needsHelp').defined().bit().validate();
+    expect(ov.isValid()).toBe(false);
+    expect(ov.getErrors()[0].message).toBe('needsHelp must be 0 or 1.');
   });
 });
 

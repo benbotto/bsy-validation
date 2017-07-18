@@ -70,7 +70,7 @@ require('insulin').factory('Validator', function(moment) {
     }
 
     /**
-     * Make sure value is a number
+     * Make sure value is a number.
      */
     isNumber(val) {
       return !isNaN(Number(val));
@@ -128,17 +128,17 @@ require('insulin').factory('Validator', function(moment) {
     }
 
     /**
-     * Make sure value is boolean
+     * Make sure value is boolean.
      */
     isBoolean(val) {
       return typeof val === 'boolean';
     }
 
     /**
-     * Make sure value is bit
+     * Make sure value is bit.
      */
     isBit(val) {
-      return val === 0 || val === 1;
+      return val === 0 || val === 1 || val === '0' || val === '1';
     }
   }
 
