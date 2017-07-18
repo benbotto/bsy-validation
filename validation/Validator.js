@@ -126,6 +126,20 @@ require('insulin').factory('Validator', function(moment) {
     notNull(val) {
       return val !== null;
     }
+
+    /**
+     * Make sure value is boolean
+     */
+    isBoolean(val) {
+      return typeof val === 'boolean';
+    }
+
+    /**
+     * Make sure value is bit
+     */
+    isBit(val) {
+      return val === 0 || val === 1;
+    }
   }
 
   return Validator;

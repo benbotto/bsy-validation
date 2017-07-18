@@ -279,6 +279,32 @@ require('insulin')
         });
         return this;
       }
+
+      /**
+       * Validates the current key as a boolean
+       */
+      boolean() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isBoolean,
+          message:   this._curKey + ' must be true or false.',
+          code:      'VAL_BOOLEAN'
+        });
+        return this;
+      }
+
+      /**
+       * Validates the current key as a bit
+       */
+      bit() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isBit,
+          message:   this._curKey + ' must be 0 or 1.',
+          code:      'VAL_BIT'
+        });
+        return this;
+      }
     }
 
     return ObjectValidator;
