@@ -241,6 +241,32 @@ require('insulin')
       }
 
       /**
+       * Validates current key as float
+       */
+      float() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isFloat,
+          message:   this._curKey + ' is not a valid float.',
+          code:      'VAL_FLOAT'
+        });
+        return this;
+      }
+
+      /**
+       * Validates current key as number
+       */
+      number() {
+        this.checkKey();
+        this._fields[this._curKey].validators.push({
+          validator: this._validator.isNumber,
+          message:   this._curKey + ' is not a valid number.',
+          code:      'VAL_NUMBER'
+        });
+        return this;
+      }
+
+      /**
        * Checks that the current key is a valid ISO8601 date.
        */
       iso8601() {
