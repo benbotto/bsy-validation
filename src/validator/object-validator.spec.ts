@@ -21,9 +21,9 @@ describe('ObjectValidator()', () => {
 
       ov
         .validate(obj, TestClass)
-        .catch(err => {
-          expect(err.length).toBe(1);
-          expect(err[0].message).toBe('"firstName" must be a string.');
+        .catch(errList => {
+          expect(errList.errors.length).toBe(1);
+          expect(errList.errors[0].message).toBe('"firstName" must be a string.');
           done();
         });
     });
@@ -33,9 +33,9 @@ describe('ObjectValidator()', () => {
 
       ov
         .validate(obj, TestClass)
-        .catch(err => {
-          expect(err.length).toBe(1);
-          expect(err[0].message).toBe('"firstName" must be at most 10 characters long.');
+        .catch(errList => {
+          expect(errList.errors.length).toBe(1);
+          expect(errList.errors[0].message).toBe('"firstName" must be at most 10 characters long.');
           done();
         });
     });
@@ -45,10 +45,10 @@ describe('ObjectValidator()', () => {
 
       ov
         .validate(obj, TestClass)
-        .catch(err => {
-          expect(err.length).toBe(2);
-          expect(err[0].message).toBe('"phone" must be a string.');
-          expect(err[1].message).toBe('"phone" is not a valid phone number.');
+        .catch(errList => {
+          expect(errList.errors.length).toBe(2);
+          expect(errList.errors[0].message).toBe('"phone" must be a string.');
+          expect(errList.errors[1].message).toBe('"phone" is not a valid phone number.');
           done();
         });
     });

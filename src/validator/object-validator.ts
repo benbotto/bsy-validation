@@ -1,3 +1,5 @@
+import { ValidationErrorList, ValidationError } from 'bsy-error';
+
 import { validationFactory } from '../';
 
 /**
@@ -10,7 +12,7 @@ export class ObjectValidator {
    */
   async validate(obj: object, Entity: {new(): any}): Promise<void> {
     const valMetas = validationFactory.getMetadata(Entity);
-    const errors: Error[] = [];
+    const errorList = new ValidationErrorList();
 
     // Because the @Constraint decorator is a factory, the validators are added
     // to the ValidationFactory in reverse order.  Here the validators are
@@ -32,12 +34,15 @@ export class ObjectValidator {
         valid = false;
       }
 
-      if (!valid)
-        errors.push(new Error(validator.getErrorMessage(valMeta.propName)));
+      if (!valid) {
+        errorList
+          .addError(new ValidationError(
+            validator.getErrorMessage(valMeta.propName), valMeta.propName));
+      }
     }
 
-    if (errors.length)
-      return Promise.reject(errors);
+    if (errorList.errors.length)
+      return Promise.reject(errorList);
     return Promise.resolve();
   }
 }
