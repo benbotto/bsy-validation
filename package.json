@@ -16,6 +16,7 @@
     "prepublishOnly": "npm run test && npm run clean && npm run build"
   },
   "dependencies": {
+    "bsy-error": "~2.0.0",
     "typescript": "~3.3.3333"
   },
   "devDependencies": {
