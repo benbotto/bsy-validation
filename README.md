@@ -1,2 +1,5 @@
 # bsy-validation
-A set of validation classes with support for node-data-mapper models.
+
+Light validation utilities for TypeScript classes.  Note that version 2 is a
+complete rewrite, and is not backwards compatible.
+
