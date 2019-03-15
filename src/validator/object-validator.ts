@@ -1,6 +1,7 @@
 import { ValidationErrorList, ValidationError } from 'bsy-error';
 
 import { validationFactory } from '../';
+import { ValidationMetadata } from '../decorator/';
 
 /**
  * Class used for validating an object against a set of constraints defined on
@@ -9,10 +10,23 @@ import { validationFactory } from '../';
 export class ObjectValidator {
   /**
    * Validate an object as an Entity.
+   * @param obj - The object to validate against class Entity.
+   * @param Entity - A class that has properties decorated with @Validate.
+   * This is the schema against which obj will be validated.
+   * @param valMetas - An optional array of [[ValidationMetadata]] used to
+   * validate the object.  If not provided, the global validators (the
+   * validators applied via the @Validate decorator) will be used.
    */
-  async validate(obj: object, Entity: {new(): any}): Promise<void> {
-    const valMetas  = validationFactory.getMetadata(Entity);
+  async validate(
+    obj: object,
+    Entity: {new(): any},
+    valMetas?: ValidationMetadata[]): Promise<void> {
+
     const errorList = new ValidationErrorList();
+
+    // Pull the global validation metadata if needed.
+    if (!valMetas)
+      valMetas = validationFactory.getMetadata(Entity);
 
     // Because the @Validate decorator is a factory, the validators are added
     // to the ValidationFactory in reverse order.  Here the @Validates are
