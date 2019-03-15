@@ -13,6 +13,14 @@ describe('Validator()', () => {
     it('returns false if the value has fewer than 10 characters.', () => {
       expect(v.validate('911')).toBe(false);
     });
+
+    it('skips the validation if the value is null.', () => {
+      expect(v.validate(null)).toBe(true);
+    });
+
+    it('skips the validation if the value is undefined.', () => {
+      expect(v.validate(undefined)).toBe(true);
+    });
   });
 
   describe('.getErrorMessage()', () => {

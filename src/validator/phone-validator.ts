@@ -13,7 +13,7 @@ export class PhoneValidator {
     if (!strVal.validate(val))
       return false;
 
-    return val.replace(/\D/g, '').length >= 10;
+    return val === undefined || val === null || val.replace(/\D/g, '').length >= 10;
   }
 
   getErrorMessage(propName: string): string {

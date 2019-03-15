@@ -12,6 +12,14 @@ describe('Validator()', () => {
     it('returns false if the value is blank.', () => {
       expect(v.validate('')).toBe(false);
     });
+
+    it('skips the validation if the value is null.', () => {
+      expect(v.validate(null)).toBe(true);
+    });
+
+    it('skips the validation if the value is undefined.', () => {
+      expect(v.validate(undefined)).toBe(true);
+    });
   });
 
   describe('.getErrorMessage()', () => {

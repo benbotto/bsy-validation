@@ -5,7 +5,7 @@ export class MaxLengthValidator implements Validator {
   }
 
   validate(val: any): boolean {
-    return String(val).length <= this.maxLength;
+    return val === undefined || val === null || String(val).length <= this.maxLength;
   }
 
   getErrorMessage(propName: string): string {
