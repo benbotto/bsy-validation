@@ -14,8 +14,8 @@ export class ObjectValidator {
     const valMetas  = validationFactory.getMetadata(Entity);
     const errorList = new ValidationErrorList();
 
-    // Because the @Constraint decorator is a factory, the validators are added
-    // to the ValidationFactory in reverse order.  Here the constraints are
+    // Because the @Validate decorator is a factory, the validators are added
+    // to the ValidationFactory in reverse order.  Here the @Validates are
     // applied in order, top to bottom.  See
     // https://www.typescriptlang.org/docs/handbook/decorators.html#decorator-composition
     for (let i = valMetas.length - 1; i >= 0; --i) {

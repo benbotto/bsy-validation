@@ -2,7 +2,7 @@ import {
   ObjectValidator, MaxLengthValidator, PhoneValidator, Validator
 } from './';
 import { validationFactory } from '../';
-import { ValidationMetadata, Constraint } from '../decorator/';
+import { ValidationMetadata, Validate } from '../decorator/';
 
 import { TestClass } from '../test/test-class';
 
@@ -21,8 +21,8 @@ describe('ObjectValidator()', () => {
         phone: 'asdf 1234'
       };
 
-      Constraint(new MaxLengthValidator(3))(TestClass.prototype, 'phone');
-      Constraint(new PhoneValidator())(TestClass.prototype, 'phone');
+      Validate(new MaxLengthValidator(3))(TestClass.prototype, 'phone');
+      Validate(new PhoneValidator())(TestClass.prototype, 'phone');
 
       ov
         .validate(obj, TestClass)
@@ -42,7 +42,7 @@ describe('ObjectValidator()', () => {
         phone: 'asdf 1234'
       };
 
-      Constraint(
+      Validate(
         new MaxLengthValidator(3),
         new PhoneValidator())(TestClass.prototype, 'phone');
 
@@ -73,7 +73,7 @@ describe('ObjectValidator()', () => {
         phone: '123-456-7890'
       };
 
-      Constraint(
+      Validate(
         new MaxLengthValidator(12),
         new ResolveValidator(),
         new PhoneValidator())(TestClass.prototype, 'phone');
@@ -99,7 +99,7 @@ describe('ObjectValidator()', () => {
         phone: '123-456-7890'
       };
 
-      Constraint(
+      Validate(
         new MaxLengthValidator(12),
         new RejectValidator(),
         new PhoneValidator())(TestClass.prototype, 'phone');
