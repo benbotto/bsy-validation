@@ -4,6 +4,15 @@ class ValidationFactory {
   private classValidators: Map<{new(): any}, ValidationMetadata[]> = new Map();
 
   /**
+   * Clear the metadata (useful in unit tests).
+   */
+  clear(): this {
+    this.classValidators.clear();
+
+    return this;
+  }
+
+  /**
    * Add a validator to a class.
    */
   addMetadata(meta: ValidationMetadata): this {
