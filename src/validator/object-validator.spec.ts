@@ -1,54 +1,114 @@
-import { ObjectValidator } from './';
+import {
+  ObjectValidator, MaxLengthValidator, PhoneValidator, Validator
+} from './';
+import { validationFactory } from '../';
+import { ValidationMetadata, Constraint } from '../decorator/';
+
 import { TestClass } from '../test/test-class';
 
 describe('ObjectValidator()', () => {
-  let ov: ObjectValidator;
+  const ov: ObjectValidator = new ObjectValidator();
 
-  beforeEach(() => ov = new ObjectValidator());
+  beforeEach(() => {
+    validationFactory.clear();
+  });
 
   describe('.validate()', () => {
     let obj: {[key: string]: any};
 
-    beforeEach(() => {
+    it('applies all constraints, even if one fails.', (done) => {
       obj = {
-        firstName: 'Joe',
-        phone: '123-456-7890'
+        phone: 'asdf 1234'
       };
-    });
 
-    it('rejects if the property is not a string.', (done) => {
-      obj.firstName = 1;
-
-      ov
-        .validate(obj, TestClass)
-        .catch(errList => {
-          expect(errList.errors.length).toBe(1);
-          expect(errList.errors[0].message).toBe('"firstName" must be a string.');
-          done();
-        });
-    });
-
-    it('rejects if the property exceeds a max length.', (done) => {
-      obj.firstName = 'Mr. Bart Simpson';
-
-      ov
-        .validate(obj, TestClass)
-        .catch(errList => {
-          expect(errList.errors.length).toBe(1);
-          expect(errList.errors[0].message).toBe('"firstName" must be at most 10 characters long.');
-          done();
-        });
-    });
-
-    it('executes validators in order, top to bottom.', (done) => {
-      obj.phone = 1;
+      Constraint(new MaxLengthValidator(3))(TestClass.prototype, 'phone');
+      Constraint(new PhoneValidator())(TestClass.prototype, 'phone');
 
       ov
         .validate(obj, TestClass)
         .catch(errList => {
           expect(errList.errors.length).toBe(2);
-          expect(errList.errors[0].message).toBe('"phone" must be a string.');
-          expect(errList.errors[1].message).toBe('"phone" is not a valid phone number.');
+
+          // Order is reversed intentionally.  See the note in ObjectValidator.
+          expect(errList.errors[0].message).toBe('"phone" is not a valid phone number.');
+          expect(errList.errors[1].message).toBe('"phone" must be at most 3 characters long.');
+
+          done();
+        });
+    });
+
+    it('applies validators until one fails.', (done) => {
+      obj = {
+        phone: 'asdf 1234'
+      };
+
+      Constraint(
+        new MaxLengthValidator(3),
+        new PhoneValidator())(TestClass.prototype, 'phone');
+
+      ov
+        .validate(obj, TestClass)
+        .catch(errList => {
+          expect(errList.errors.length).toBe(1);
+
+          expect(errList.errors[0].message).toBe('"phone" must be at most 3 characters long.');
+
+          done();
+        });
+    });
+
+    it('passes if an asyn validator resolves.', (done) => {
+      class ResolveValidator implements Validator {
+        validate(val: any): Promise<void> {
+          return new Promise(resolve =>
+            setTimeout(() => resolve(), 0));
+        }
+
+        getErrorMessage(prop: string): string {
+          return '';
+        }
+      }
+
+      obj = {
+        phone: '123-456-7890'
+      };
+
+      Constraint(
+        new MaxLengthValidator(12),
+        new ResolveValidator(),
+        new PhoneValidator())(TestClass.prototype, 'phone');
+
+      ov
+        .validate(obj, TestClass)
+        .then(() => done())
+    });
+
+    it('fails if an asyn validator rejects.', (done) => {
+      class RejectValidator implements Validator {
+        validate(val: any): Promise<void> {
+          return new Promise((resolve, reject) =>
+            setTimeout(() => reject(new Error('foo')), 0));
+        }
+
+        getErrorMessage(prop: string): string {
+          return 'Rejected!';
+        }
+      }
+
+      obj = {
+        phone: '123-456-7890'
+      };
+
+      Constraint(
+        new MaxLengthValidator(12),
+        new RejectValidator(),
+        new PhoneValidator())(TestClass.prototype, 'phone');
+
+      ov
+        .validate(obj, TestClass)
+        .catch(errList => {
+          expect(errList.errors.length).toBe(1);
+          expect(errList.errors[0].message).toBe('Rejected!');
           done();
         });
     });
