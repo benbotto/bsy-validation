@@ -17,7 +17,7 @@ describe('Validator()', () => {
 
   describe('.getErrorMessage()', () => {
     it('returns an error message.', () => {
-      expect(v.getErrorMessage('foo')).toBe('"foo" is not a valid phone number.');
+      expect(v.getErrorMessage('foo')).toBe('"foo" must be a valid phone number.');
     });
   });
 });

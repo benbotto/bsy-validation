@@ -17,7 +17,7 @@ export class PhoneValidator {
   }
 
   getErrorMessage(propName: string): string {
-    return `"${propName}" is not a valid phone number.`;
+    return `"${propName}" must be a valid phone number.`;
   }
 }
 

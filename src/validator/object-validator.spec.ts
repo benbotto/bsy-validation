@@ -30,7 +30,7 @@ describe('ObjectValidator()', () => {
           expect(errList.errors.length).toBe(2);
 
           // Order is reversed intentionally.  See the note in ObjectValidator.
-          expect(errList.errors[0].message).toBe('"phone" is not a valid phone number.');
+          expect(errList.errors[0].message).toBe('"phone" must be a valid phone number.');
           expect(errList.errors[1].message).toBe('"phone" must be at most 3 characters long.');
 
           done();
