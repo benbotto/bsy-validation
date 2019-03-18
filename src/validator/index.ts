@@ -7,6 +7,7 @@ export * from './not-blank-validator';
 export * from './phone-validator';
 export * from './email-validator';
 export * from './zip-validator';
+export * from './int-validator';
 
 export * from './object-validator';
 
