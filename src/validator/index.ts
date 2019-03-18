@@ -10,6 +10,7 @@ export * from './email-validator';
 export * from './zip-validator';
 export * from './int-validator';
 export * from './number-validator';
+export * from './iso-8601-validator';
 
 export * from './object-validator';
 
