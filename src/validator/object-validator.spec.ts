@@ -70,7 +70,7 @@ describe('ObjectValidator()', () => {
       }
 
       obj = {
-        phone: '123-456-7890'
+        phone: '223-456-7890'
       };
 
       Validate(

@@ -4,14 +4,18 @@ describe('PhoneValidator()', () => {
   const v = new PhoneValidator();
 
   describe('.validate()', () => {
-    it('returns true if the value has at least 10 digits.', () => {
-      expect(v.validate('1234567890')).toBe(true);
-      expect(v.validate('1234567890123')).toBe(true);
-      expect(v.validate('123.456-7890')).toBe(true);
+    it('returns true if the value is a US phone.', () => {
+      expect(v.validate('1 916-224-1111')).toBe(true);
+      expect(v.validate('(916).224.1111')).toBe(true);
+      expect(v.validate('1 234 456 9900 ext. 21')).toBe(true);
     });
 
-    it('returns false if the value has fewer than 10 characters.', () => {
+    it('returns false for three-digit phones.', () => {
       expect(v.validate('911')).toBe(false);
+    });
+
+    it('returns false if the value is not a valid phone.', () => {
+      expect(v.validate('test')).toBe(false);
     });
 
     it('skips the validation if the value is null.', () => {

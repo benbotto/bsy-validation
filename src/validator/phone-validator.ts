@@ -2,10 +2,7 @@ import { Validator, StringValidator } from './';
 
 export class PhoneValidator {
   /**
-   * This validator only checks that the supplied phone number is a string with
-   * at least 10 digits.  It strips delimiters, and doesn't check a phone
-   * number's validity (e.g. an area code of 099 will pass, but is invalid in
-   * the US).
+   * Only checks US phone numbers.  Regex from http://phoneregex.com/.
    */
   validate(val: any): boolean {
     const strVal = new StringValidator();
@@ -13,7 +10,8 @@ export class PhoneValidator {
     if (!strVal.validate(val))
       return false;
 
-    return val === undefined || val === null || val.replace(/\D/g, '').length >= 10;
+    return val === undefined || val === null ||
+      /1?\W*([2-9][0-8][0-9])\W*([2-9][0-9]{2})\W*([0-9]{4})(\se?x?t?(\d*))?/.test(val);
   }
 
   getErrorMessage(propName: string): string {
