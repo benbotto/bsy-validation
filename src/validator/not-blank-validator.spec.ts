@@ -1,6 +1,6 @@
 import { NotBlankValidator } from './';
 
-describe('Validator()', () => {
+describe('NotBlankValidator()', () => {
   const v = new NotBlankValidator();
 
   describe('.validate()', () => {

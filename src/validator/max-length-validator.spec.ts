@@ -1,6 +1,6 @@
 import { MaxLengthValidator } from './';
 
-describe('Validator()', () => {
+describe('MaxLengthValidator()', () => {
   const v = new MaxLengthValidator(2);
 
   describe('.validate()', () => {

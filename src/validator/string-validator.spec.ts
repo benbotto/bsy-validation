@@ -1,6 +1,6 @@
 import { StringValidator } from './';
 
-describe('Validator()', () => {
+describe('StringValidator()', () => {
   const v = new StringValidator();
 
   describe('.validate()', () => {

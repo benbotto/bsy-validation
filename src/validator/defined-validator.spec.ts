@@ -1,6 +1,6 @@
 import { DefinedValidator } from './';
 
-describe('Validator()', () => {
+describe('DefinedValidator()', () => {
   const v = new DefinedValidator();
 
   describe('.validate()', () => {
