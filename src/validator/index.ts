@@ -11,6 +11,7 @@ export * from './zip-validator';
 export * from './int-validator';
 export * from './number-validator';
 export * from './iso-8601-validator';
+export * from './date-validator';
 export * from './boolean-validator';
 
 export * from './object-validator';
