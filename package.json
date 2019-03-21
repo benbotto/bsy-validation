@@ -4,7 +4,7 @@
   "description": "Light validation for TypeScript classes.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/benbotto/formn-validation",
+  "repository": "https://github.com/benbotto/bsy-validation",
   "author": "Ben Botto",
   "license": "MIT",
   "scripts": {
