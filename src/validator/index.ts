@@ -15,4 +15,5 @@ export * from './date-validator';
 export * from './boolean-validator';
 
 export * from './object-validator';
+export * from './model-validator';
 
