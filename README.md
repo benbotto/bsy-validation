@@ -127,3 +127,35 @@ The above logs an error that describes why the object is invalid.
   ]
 }
 ```
+
+### Validator Call Order
+
+For a given `@Validate`-decorated property, validators are applied in order.  If one of the validators fails, then execution halts.  For example, in the `Person` class defined above, `Person.name` has two validators: [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) and [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts).  [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) is applied first, then [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts) is  called *if [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) passes*.
+
+```typescript
+const aGirlHasNoName = {
+  name: false // Not a string.
+};
+
+validator
+  .validate(aGirlHasNoName, Person)
+  .catch(err => console.error(JSON.stringify(err, null, 2)));
+```
+
+In the above example, `aGirlHasNoName.name` is not a string, so [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts) is never executed.  The above logs the following error.
+
+```
+{
+  "code": "VAL_ERROR_LIST",
+  "name": "ValidationErrorList",
+  "detail": "Validation errors occurred.",
+  "errors": [
+    {
+      "code": "VALIDATION_ERROR",
+      "name": "ValidationError",
+      "detail": "\"name\" must be a string.",
+      "field": "name"
+    }
+  ]
+}
+```
