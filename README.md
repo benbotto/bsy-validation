@@ -177,3 +177,58 @@ class Greeting {
 ```
 
 When defining custom validators, you should consider `null` and `undefined` values to be valid.
+
+### Custom Validators
+
+To create a custom validator, implement the [Validator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/validator.ts) interface.  You must define a `validate` method that returns a boolean or a promise, and a `getErrorMessage` method that's used when validation fails.  Here's an example.
+
+```typescript
+import { Validator, Validate, ObjectValidator, NumberValidator } from 'bsy-validation';
+
+class OddNumberValidator implements Validator {
+  /**
+   * Check that val is a number and is odd.
+   */
+  validate(val: any): boolean {
+    const numVal = new NumberValidator();
+
+    return val === undefined || val === null ||
+      numVal.validate(val) && Number(val) % 2 === 1;
+  }
+
+  /**
+   * Describe the validation error.
+   */
+  getErrorMessage(propName: string): string {
+    return `"${propName}" must be an odd number.`;
+  }
+}
+
+class Preferences {
+  @Validate(new OddNumberValidator())
+  favoriteNumber: number;
+}
+
+new ObjectValidator()
+  .validate({favoriteNumber: 18}, Preferences)
+  .catch(err => console.error(JSON.stringify(err, null, 2)));
+```
+
+When run, the above prints the following error.
+
+```
+{
+  "code": "VAL_ERROR_LIST",
+  "name": "ValidationErrorList",
+  "detail": "Validation errors occurred.",
+  "errors": [
+    {
+      "code": "VALIDATION_ERROR",
+      "name": "ValidationError",
+      "detail": "\"favoriteNumber\" must be an odd number.",
+      "field": "favoriteNumber"
+    }
+  ]
+}
+
+```
