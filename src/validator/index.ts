@@ -1,5 +1,6 @@
 export * from './validator';
 export * from './defined-validator';
+export * from './undefined-validator';
 export * from './not-null-validator';
 export * from './string-validator';
 export * from './max-length-validator';
