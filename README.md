@@ -159,3 +159,21 @@ In the above example, `aGirlHasNoName.name` is not a string, so [MaxLengthValida
   ]
 }
 ```
+
+### Null and Undefined
+
+Validation is skipped for `null` and `undefined` properties.  So, for example, an empty object is considered to be a valid `Person`.  To ensure that a property is present and/or non-null, use the [DefinedValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/defined-validator.ts) and [NotNullValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/not-null-validator.ts).
+
+In the following class, the `message` property must be defined, cannot be null, and must be a string.
+
+```typescript
+class Greeting {
+  @Validate(
+    new DefinedValidator(),
+    new NotNullValidator(),
+    new StringValidator())
+  message: string;
+}
+```
+
+When defining custom validators, you should consider `null` and `undefined` values to be valid.
