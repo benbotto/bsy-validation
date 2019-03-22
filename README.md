@@ -22,7 +22,7 @@ Ensure that you have `experimentalDecorators` and `emitDecoratorMetadata` enable
 
 ### Usage
 
-First, decorate a class's properties with the `@Validate` decorator.  Supply one or more [Validators](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/validator.ts) as arguments.  All of the [Validator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/validator.ts) classes can be found in the [validator](https://github.com/benbotto/bsy-validation/tree/develop-2.x.x/src/validator) directory.
+First, decorate a class's properties with the `@Validate` decorator, supplying one or more [Validators](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/validator.ts) as arguments.  All of the [Validator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/validator.ts) classes can be found in the [validator](https://github.com/benbotto/bsy-validation/tree/develop-2.x.x/src/validator) directory.
 
 For example, here is a decorated `Person` class.
 
@@ -78,8 +78,7 @@ const joeDirt = {
 
 validator
   .validate(joeDirt, Person)
-  .then(() => console.log('Joe Dirt is valid.'))
-  .catch(console.error);
+  .then(() => console.log('Joe Dirt is valid.'));
 ```
 
 The above logs "Joe Dirt is valid."  Here's an example of an invalid object.
@@ -97,10 +96,8 @@ const emperorTrump = {
   name: 'Trust me people, my name is Mister Magnificient Trump', // Too long.
   weight: 239 // A lie, but valid.
 };
-
 validator
   .validate(emperorTrump, Person)
-  .then(() => console.log('Trump is valid.'))
   .catch(err => console.error(JSON.stringify(err, null, 2)));
 ```
 
@@ -133,16 +130,16 @@ The above logs an error that describes why the object is invalid.
 For a given `@Validate`-decorated property, validators are applied in order.  If one of the validators fails, then execution halts.  For example, in the `Person` class defined above, `Person.name` has two validators: [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) and [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts).  [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) is applied first, then [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts) is  called *if [StringValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/string-validator.ts) passes*.
 
 ```typescript
-const aGirlHasNoName = {
-  name: false // Not a string.
+const aryaStark = {
+  name: false // Not a string.  A girl has no name.
 };
 
 validator
-  .validate(aGirlHasNoName, Person)
+  .validate(aryaStark, Person)
   .catch(err => console.error(JSON.stringify(err, null, 2)));
 ```
 
-In the above example, `aGirlHasNoName.name` is not a string, so [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts) is never executed.  The above logs the following error.
+In the above example, `aryaStark.name` is not a string, so [MaxLengthValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/max-length-validator.ts) is never executed.  The above logs the following error.
 
 ```
 {
@@ -162,7 +159,7 @@ In the above example, `aGirlHasNoName.name` is not a string, so [MaxLengthValida
 
 ### Null and Undefined
 
-Validation is skipped for `null` and `undefined` properties.  So, for example, an empty object is considered to be a valid `Person`.  To ensure that a property is present and/or non-null, use the [DefinedValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/defined-validator.ts) and [NotNullValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/not-null-validator.ts).
+The built-in validators consider `null` and `undefined` properties to be valid.  So, for example, an empty object is considered to be a valid `Person`.  To ensure that a property is present and/or non-null, use the [DefinedValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/defined-validator.ts) and [NotNullValidator](https://github.com/benbotto/bsy-validation/blob/develop-2.x.x/src/validator/not-null-validator.ts).
 
 In the following class, the `message` property must be defined, cannot be null, and must be a string.
 
@@ -176,7 +173,7 @@ class Greeting {
 }
 ```
 
-When defining custom validators, you should consider `null` and `undefined` values to be valid.
+When defining custom validators, `null` and `undefined` values should be considered valid.
 
 ### Custom Validators
 
@@ -230,5 +227,4 @@ When run, the above prints the following error.
     }
   ]
 }
-
 ```
