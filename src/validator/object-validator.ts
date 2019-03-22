@@ -4,8 +4,8 @@ import { validationFactory } from '../';
 import { ValidationMetadata } from '../decorator/';
 
 /**
- * Class used for validating an object against a set of constraints defined on
- * a class.
+ * Class used for validating an object against a class's validation schema, as
+ * defined by properies decorated with @[[Validate]].
  */
 export class ObjectValidator {
   /**
@@ -13,20 +13,15 @@ export class ObjectValidator {
    * @param obj - The object to validate against class Entity.
    * @param Entity - A class that has properties decorated with @Validate.
    * This is the schema against which obj will be validated.
-   * @param valMetas - An optional array of [[ValidationMetadata]] used to
-   * validate the object.  If not provided, the global validators (the
-   * validators applied via the @Validate decorator) will be used.
+   * @return A Promise instance that is resolved of obj is valid, or rejected
+   * with a ValidationErrorList (see bsy-error) if invalid.
    */
   async validate(
     obj: object,
-    Entity: {new(): any},
-    valMetas?: ValidationMetadata[]): Promise<void> {
+    Entity: {new(): any}): Promise<void> {
 
     const errorList = new ValidationErrorList();
-
-    // Pull the global validation metadata if needed.
-    if (!valMetas)
-      valMetas = validationFactory.getMetadata(Entity);
+    const valMetas  = this.getValidationMetadata(Entity);
 
     // Because the @Validate decorator is a factory, the validators are added
     // to the ValidationFactory in reverse order.  Here the @Validates are
@@ -69,6 +64,13 @@ export class ObjectValidator {
     if (errorList.errors.length)
       return Promise.reject(errorList);
     return Promise.resolve();
+  }
+
+  /**
+   * Get the [[ValidationMetadata]] for the Entity from the validationFactory.
+   */
+  getValidationMetadata(Entity: {new(): any}): ValidationMetadata[] {
+    return validationFactory.getMetadata(Entity);
   }
 }
 
