@@ -112,25 +112,6 @@ describe('ObjectValidator()', () => {
           done();
         });
     });
-
-    it('uses the passed-in ValidationMetadata array.', (done) => {
-      obj = {
-        phone: 'asdf 123'
-      };
-
-      // This validator will be ignored (it would fail).
-      Validate(new MaxLengthValidator(3))(TestClass.prototype, 'phone');
-
-      const valMetas = new ValidationMetadata(TestClass, 'phone', [new PhoneValidator()]);
-
-      ov
-        .validate(obj, TestClass, [valMetas])
-        .catch(errList => {
-          expect(errList.errors.length).toBe(1);
-          expect(errList.errors[0].message).toBe('"phone" must be a valid phone number.');
-          done();
-        });
-    });
   });
 });
 
