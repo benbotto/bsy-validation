@@ -43,6 +43,11 @@ require('insulin').factory('ModelValidator', function(ObjectValidator) {
         case 'int':
           this.integer();
           break;
+        case 'float':
+        case 'money':
+        case 'decimal':
+          this.number();
+          break;
         case 'varchar':
         case 'nvarchar':
         case 'text':

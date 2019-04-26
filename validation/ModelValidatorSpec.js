@@ -40,6 +40,18 @@ describe('ModelValidator suite', function() {
           {
             name: 'lastSeen',
             dataType: 'timestamp'
+          },
+          {
+            name: 'floater',
+            dataType: 'float'
+          },
+          {
+            name: 'deci',
+            dataType: 'decimal'
+          },
+          {
+            name: 'worth',
+            dataType: 'money'
           }
         ]
       }
@@ -68,6 +80,54 @@ describe('ModelValidator suite', function() {
       .then(() => expect(true).toBe(false))
       .catch(errList => {
         expect(errList.errors[0].message).toBe('age is not a valid integer.');
+      });
+  });
+
+  it('checks the float validation.', function() {
+    let model = {name: 'Joe', floater: 1.7};
+    let mv    = new ModelValidator(model, 'people', db);
+    mv.validate();
+    expect(mv.isValid()).toBe(true);
+
+    model = {name: 'Joe', floater: 'asdf'};
+    mv    = new ModelValidator(model, 'people', db);
+
+    mv.validate()
+      .then(() => expect(true).toBe(false))
+      .catch(errList => {
+        expect(errList.errors[0].message).toBe('floater is not a valid number.');
+      });
+  });
+
+  it('checks the decimal validation.', function() {
+    let model = {name: 'Joe', deci: '1.7'};
+    let mv    = new ModelValidator(model, 'people', db);
+    mv.validate();
+    expect(mv.isValid()).toBe(true);
+
+    model = {name: 'Joe', deci: 'asdf'};
+    mv    = new ModelValidator(model, 'people', db);
+
+    mv.validate()
+      .then(() => expect(true).toBe(false))
+      .catch(errList => {
+        expect(errList.errors[0].message).toBe('deci is not a valid number.');
+      });
+  });
+
+  it('checks the money validation.', function() {
+    let model = {name: 'Joe', worth: 1.7};
+    let mv    = new ModelValidator(model, 'people', db);
+    mv.validate();
+    expect(mv.isValid()).toBe(true);
+
+    model = {name: 'Joe', worth: 'asdf'};
+    mv    = new ModelValidator(model, 'people', db);
+
+    mv.validate()
+      .then(() => expect(true).toBe(false))
+      .catch(errList => {
+        expect(errList.errors[0].message).toBe('worth is not a valid number.');
       });
   });
 
