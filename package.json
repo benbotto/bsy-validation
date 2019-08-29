@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "~3.3.9",
-    "chokidar-cli": "~1.2.2",
+    "chokidar-cli": "2.x.x",
     "jasmine": "~3.3.1",
     "jasmine-console-reporter": "~3.1.0",
     "ts-node": "~8.0.2"
