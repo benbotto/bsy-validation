@@ -15,6 +15,7 @@ export * from './iso-8601-validator';
 export * from './date-validator';
 export * from './boolean-validator';
 export * from './array-validator';
+export * from './in-validator';
 
 export * from './object-validator';
 
