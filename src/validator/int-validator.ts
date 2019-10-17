@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class IntValidator {
+export class IntValidator implements Validator {
   /**
    * Checks that a number or string is an integer or is coercible to an int.
    */

@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class BooleanValidator {
+export class BooleanValidator implements Validator {
   /**
    * Checks that a value is of type boolean.
    */

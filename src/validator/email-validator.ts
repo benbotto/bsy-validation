@@ -1,6 +1,6 @@
 import { Validator, StringValidator } from './';
 
-export class EmailValidator {
+export class EmailValidator implements Validator {
   /**
    * Regex taken from http://emailregex.com/.
    */

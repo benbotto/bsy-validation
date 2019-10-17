@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class InValidator<T> {
+export class InValidator<T> implements Validator {
   constructor(private validValues: T[]) {
   }
 

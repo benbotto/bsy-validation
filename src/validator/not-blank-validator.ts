@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class NotBlankValidator {
+export class NotBlankValidator implements Validator {
   validate(val: any): boolean {
     return val !== '';
   }

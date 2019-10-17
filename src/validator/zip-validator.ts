@@ -1,6 +1,6 @@
 import { Validator, StringValidator } from './';
 
-export class ZipValidator {
+export class ZipValidator implements Validator {
   /**
    * CIDR zip validator for US.
    */

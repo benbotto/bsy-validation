@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class ArrayValidator {
+export class ArrayValidator implements Validator {
   /**
    * Checks that a value is an array.
    */

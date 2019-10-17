@@ -2,7 +2,7 @@ import * as moment from 'moment';
 
 import { Validator, StringValidator } from './';
 
-export class ISO8601Validator {
+export class ISO8601Validator implements Validator {
   /**
    * Checks that a string is a UTC (zulu) ISO8601 date.
    */

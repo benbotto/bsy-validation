@@ -1,6 +1,6 @@
 import { Validator } from './';
 
-export class NumberValidator {
+export class NumberValidator implements Validator {
   /**
    * Checks that a value is a number or string that can be coerced to a number.
    */

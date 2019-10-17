@@ -1,6 +1,6 @@
 import { Validator, StringValidator } from './';
 
-export class PhoneValidator {
+export class PhoneValidator implements Validator {
   /**
    * Only checks US phone numbers.  Regex from http://phoneregex.com/.
    */

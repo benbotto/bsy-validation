@@ -1,6 +1,6 @@
 import { Validator, ISO8601Validator } from './';
 
-export class DateValidator {
+export class DateValidator implements Validator {
   /**
    * Checks that the value is a date or coercible to a date (ISO8601 string).
    */
