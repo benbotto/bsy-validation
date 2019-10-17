@@ -17,6 +17,7 @@ export * from './boolean-validator';
 export * from './array-validator';
 export * from './in-validator';
 export * from './json-validator';
+export * from './json-object-validator';
 
 export * from './object-validator';
 
