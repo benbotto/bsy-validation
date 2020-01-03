@@ -16,7 +16,7 @@ export class MinLengthValidator implements Validator {
   }
 
   getErrorMessage(propName: string): string {
-    return `"${propName}" must be at least ${this.minLength} characters long.`;
+    return `"${propName}" must have a length of at least ${this.minLength}.`;
   }
 }
 

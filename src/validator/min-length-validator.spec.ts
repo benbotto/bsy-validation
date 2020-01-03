@@ -38,7 +38,7 @@ describe('MinLengthValidator()', () => {
 
   describe('.getErrorMessage()', () => {
     it('returns an error message.', () => {
-      expect(v.getErrorMessage('foo')).toBe('"foo" must be at least 2 characters long.');
+      expect(v.getErrorMessage('foo')).toBe('"foo" must have a length of at least 2.');
     });
   });
 });
