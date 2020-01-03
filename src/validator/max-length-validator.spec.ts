@@ -17,6 +17,17 @@ describe('MaxLengthValidator()', () => {
       expect(v.validate(123)).toBe(false);
     });
 
+    it('returns true if the array is less than or equal to the max length.', () => {
+      expect(v.validate([])).toBe(true);
+      expect(v.validate([1])).toBe(true);
+      expect(v.validate([1, 2])).toBe(true);
+    });
+
+    it('returns false if the array exceeds the max length.', () => {
+      expect(v.validate([1, 2, 3])).toBe(false);
+      expect(v.validate([1, 2, 3, 4])).toBe(false);
+    });
+
     it('skips the validation if the value is null.', () => {
       expect(v.validate(null)).toBe(true);
     });
