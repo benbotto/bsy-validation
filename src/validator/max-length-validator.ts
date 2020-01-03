@@ -15,7 +15,7 @@ export class MaxLengthValidator implements Validator {
   }
 
   getErrorMessage(propName: string): string {
-    return `"${propName}" must be at most ${this.maxLength} characters long.`;
+    return `"${propName}" must have a length that does not exceed ${this.maxLength}.`;
   }
 }
 

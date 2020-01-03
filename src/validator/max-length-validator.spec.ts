@@ -39,7 +39,7 @@ describe('MaxLengthValidator()', () => {
 
   describe('.getErrorMessage()', () => {
     it('returns an error message.', () => {
-      expect(v.getErrorMessage('foo')).toBe('"foo" must be at most 2 characters long.');
+      expect(v.getErrorMessage('foo')).toBe('"foo" must have a length that does not exceed 2.');
     });
   });
 });
