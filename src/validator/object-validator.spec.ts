@@ -31,7 +31,7 @@ describe('ObjectValidator()', () => {
 
           // Order is reversed intentionally.  See the note in ObjectValidator.
           expect(errList.errors[0].message).toBe('"phone" must be a valid phone number.');
-          expect(errList.errors[1].message).toBe('"phone" must be at most 3 characters long.');
+          expect(errList.errors[1].message).toBe('"phone" must have a length that does not exceed 3.');
 
           done();
         });
@@ -51,7 +51,7 @@ describe('ObjectValidator()', () => {
         .catch(errList => {
           expect(errList.errors.length).toBe(1);
 
-          expect(errList.errors[0].message).toBe('"phone" must be at most 3 characters long.');
+          expect(errList.errors[0].message).toBe('"phone" must have a length that does not exceed 3.');
 
           done();
         });
