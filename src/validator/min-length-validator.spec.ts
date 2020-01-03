@@ -17,6 +17,16 @@ describe('MinLengthValidator()', () => {
       expect(v.validate(1)).toBe(false);
     });
 
+    it('returns true if the array is long enough.', () => {
+      expect(v.validate([1, 2])).toBe(true);
+      expect(v.validate([1, 2, 3])).toBe(true);
+    });
+
+    it('returns false if the array is not long enough.', () => {
+      expect(v.validate([])).toBe(false);
+      expect(v.validate([1])).toBe(false);
+    });
+
     it('skips the validation if the value is null.', () => {
       expect(v.validate(null)).toBe(true);
     });
