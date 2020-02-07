@@ -5,9 +5,25 @@ describe('PhoneValidator()', () => {
 
   describe('.validate()', () => {
     it('returns true if the value is a US phone.', () => {
-      expect(v.validate('1 916-224-1111')).toBe(true);
-      expect(v.validate('(916).224.1111')).toBe(true);
-      expect(v.validate('1 234 456 9900 ext. 21')).toBe(true);
+      expect(v.validate('9162241111')).toBe(true);
+      expect(v.validate('(916)2241111')).toBe(true);
+      expect(v.validate('(916)-2241111')).toBe(true);
+      expect(v.validate('(916).2241111')).toBe(true);
+      expect(v.validate('(916) 2241111')).toBe(true);
+      expect(v.validate('(916)-224-1111')).toBe(true);
+      expect(v.validate('(916)-224.1111')).toBe(true);
+      expect(v.validate('(916)-224 1111')).toBe(true);
+      expect(v.validate('(916)-224 1111 12')).toBe(true);
+      expect(v.validate('(916)-224 1111 e12')).toBe(true);
+      expect(v.validate('(916)-224 1111 ex12')).toBe(true);
+      expect(v.validate('(916)-224 1111 ext12')).toBe(true);
+      expect(v.validate('(916)-224 1111 ext.12')).toBe(true);
+      expect(v.validate('(916)-224 1111 ext. 12')).toBe(true);
+    });
+
+    it('returns false if the phone number starts with a 1.', () => {
+      expect(v.validate('1 234 456 9900 ext. 21')).toBe(false);
+      expect(v.validate('1 916-224-1111')).toBe(false);
     });
 
     it('returns false for three-digit phones.', () => {
@@ -16,6 +32,9 @@ describe('PhoneValidator()', () => {
 
     it('returns false if the value is not a valid phone.', () => {
       expect(v.validate('test')).toBe(false);
+      expect(v.validate(' 9162241111')).toBe(false);
+      expect(v.validate('916  2241111')).toBe(false);
+      expect(v.validate('916224  1111')).toBe(false);
     });
 
     it('skips the validation if the value is null.', () => {
