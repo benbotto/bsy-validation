@@ -6,7 +6,12 @@ describe('PhoneValidator()', () => {
   describe('.validate()', () => {
     it('returns true if the value is a US phone.', () => {
       expect(v.validate('9162241111')).toBe(true);
+      expect(v.validate('916224111112')).toBe(true);
+      expect(v.validate('9162241111e12')).toBe(true);
+      expect(v.validate('9162241111 12')).toBe(true);
       expect(v.validate('(916)2241111')).toBe(true);
+      expect(v.validate('(916)224111112')).toBe(true);
+      expect(v.validate('(916)2241111 12')).toBe(true);
       expect(v.validate('(916)-2241111')).toBe(true);
       expect(v.validate('(916).2241111')).toBe(true);
       expect(v.validate('(916) 2241111')).toBe(true);

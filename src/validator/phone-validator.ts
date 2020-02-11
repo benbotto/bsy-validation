@@ -11,7 +11,7 @@ export class PhoneValidator implements Validator {
       return false;
 
     return val === undefined || val === null ||
-      /^\(?[2-9][0-8][0-9]\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}(?:\se?x?t?\.?\s?\d*)?$/.test(val);
+      /^\(?[2-9][0-8][0-9]\)?[-.\s]?[2-9][0-9]{2}[-.\s]?[0-9]{4}(?:\s?e?x?t?\.?\s?\d*)?$/.test(val);
   }
 
   getErrorMessage(propName: string): string {
