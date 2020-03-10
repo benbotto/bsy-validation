@@ -11,7 +11,7 @@ export class ZipValidator implements Validator {
       return false;
 
     return val === undefined || val === null ||
-      /\d{5}([ \-]\d{4})?/.test(val);
+      /^\d{5}([ \-]\d{4})?$/.test(val);
   }
 
   getErrorMessage(propName: string): string {

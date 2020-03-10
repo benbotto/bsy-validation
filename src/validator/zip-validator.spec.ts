@@ -14,6 +14,12 @@ describe('ZipValidator()', () => {
       expect(v.validate('test')).toBe(false);
     });
 
+    it('returns false on partial matches.', () => {
+      expect(v.validate('abc98156')).toBe(false);
+      expect(v.validate('98156asd')).toBe(false);
+      expect(v.validate('abc98156asd')).toBe(false);
+    });
+
     it('skips the validation if the value is null.', () => {
       expect(v.validate(null)).toBe(true);
     });
